@@ -24,6 +24,8 @@ public class PostImage {
 
     private String url;
 
+    private String title;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
