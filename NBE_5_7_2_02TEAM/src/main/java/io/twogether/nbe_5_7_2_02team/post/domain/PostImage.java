@@ -31,6 +31,7 @@ public class PostImage {
     public PostImage(String url, Post post) {
 
         this.url = url;
+        
         this.post = post;
 
     }
