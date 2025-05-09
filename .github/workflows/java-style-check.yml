@@ -1,11 +1,9 @@
 name: Java Style Check
 
 on: # yamllint disable-line rule:truthy
-  push: null
-  pull_request: dev
-
-permissions:
-  contents: read
+  pull_request:
+    branches:
+      - dev # dev 브랜치로 PR이 생성될 때 실행
 
 jobs:
   fix-lint-issues:
@@ -28,8 +26,7 @@ jobs:
         # Run only on:
         # - Pull requests
         # - Not on the default branch
-        if: >
-          github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: ${{ github.event.pull_request.head.ref || github.head_ref || github.ref }}
