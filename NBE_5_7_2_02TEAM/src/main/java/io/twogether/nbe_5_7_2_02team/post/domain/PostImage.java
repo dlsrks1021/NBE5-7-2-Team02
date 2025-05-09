@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,13 +24,17 @@ public class PostImage {
 
     private String url;
 
+    private String title;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 
     @Builder
     public PostImage(String url, Post post) {
+
         this.url = url;
+
         this.post = post;
     }
 }
