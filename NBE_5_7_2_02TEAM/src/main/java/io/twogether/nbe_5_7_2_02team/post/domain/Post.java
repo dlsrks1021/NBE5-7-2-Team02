@@ -1,6 +1,8 @@
 package io.twogether.nbe_5_7_2_02team.post.domain;
 
+import io.twogether.nbe_5_7_2_02team.global.common.BaseEntity;
 import io.twogether.nbe_5_7_2_02team.member.domain.Member;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,14 +16,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import io.twogether.nbe_5_7_2_02team.global.common.BaseEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,22 +45,20 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RecruitmentStatus recruitmentStatus;
 
-    @OneToMany(mappedBy = "post",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private List<PostTag> postTags
-        = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostTag> postTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImage> postImages = new ArrayList<>();
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
     public Post(String title, String content, RecruitmentStatus recruitmentStatus) {
-        this.title = title; this.content = content; this.recruitmentStatus = recruitmentStatus;
+        this.title = title;
+        this.content = content;
+        this.recruitmentStatus = recruitmentStatus;
     }
 }
