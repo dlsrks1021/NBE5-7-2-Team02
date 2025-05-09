@@ -43,8 +43,12 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RecruitmentStatus recruitmentStatus;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostTag> postTags = new ArrayList<>();
+    @OneToMany(mappedBy = "post",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private List<PostTag> postTags
+        = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImage> postImages = new ArrayList<>();
@@ -55,8 +59,6 @@ public class Post extends BaseEntity {
 
     @Builder
     public Post(String title, String content, RecruitmentStatus recruitmentStatus) {
-        this.title = title;
-        this.content = content;
-        this.recruitmentStatus = recruitmentStatus;
+        this.title = title; this.content = content; this.recruitmentStatus = recruitmentStatus;
     }
 }
