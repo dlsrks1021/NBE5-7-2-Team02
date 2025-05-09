@@ -20,6 +20,8 @@ jobs:
       - name: Super-Linter
         uses: super-linter/super-linter@v7.3.0 # x-release-please-version
         env:
+          VALIDATE_ALL_CODEBASE: false # 전체 파일 검사 비활성화
+          VALIDATE_GOOGLE_JAVA_FORMAT: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FIX_GOOGLE_JAVA_FORMAT: true
       - name: Commit and push linting fixes
