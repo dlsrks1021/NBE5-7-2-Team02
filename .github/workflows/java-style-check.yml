@@ -1,18 +1,38 @@
 name: Java Style Check
 
-on:
-  pull_request:
-    branches: [dev]
+on: # yamllint disable-line rule:truthy
+  push: null
+  pull_request: dev
+
+permissions:
+  contents: read
 
 jobs:
-  style-check:
+  fix-lint-issues:
+    permissions:
+      # To write linting fixes
+      contents: write
+      # To write Super-linter status checks
+      statuses: write
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-      - uses: axel-op/googlejavaformat-action@v4
         with:
-          args: "--replace --aosp"
-          skip-commit: true
-      - name: Print diffs
-        run: git --no-pager diff --exit-code
+          fetch-depth: 0
+      - name: Super-Linter
+        uses: super-linter/super-linter@v7.3.0 # x-release-please-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIX_GOOGLE_JAVA_FORMAT: true
+      - name: Commit and push linting fixes
+        # Run only on:
+        # - Pull requests
+        # - Not on the default branch
+        if: >
+          github.event_name == 'pull_request'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: ${{ github.event.pull_request.head.ref || github.head_ref || github.ref }}
+          commit_message: "chore: 스타일 수정"
+          commit_user_name: super-linter
+          commit_user_email: super-linter@super-linter.dev
